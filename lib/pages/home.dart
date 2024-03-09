@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+
 
   @override
   State<Home> createState() => _HomeState();
@@ -28,8 +28,7 @@ class _HomeState extends State<Home> {
               Column(
                 children: [
                   Image(
-                    image: AssetImage('assets/img.png'),
-
+                    image: AssetImage('assets/coffee-icon1.png'),
                   ),
                   Text(
                     'Coffee Shop',
@@ -44,7 +43,9 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 90),
               TextButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(context, '/start');
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   child: Text(
