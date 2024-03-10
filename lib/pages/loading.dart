@@ -22,12 +22,12 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       backgroundColor: Colors.brown,
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/loading-bg.png'),
-            fit: BoxFit.cover
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage('assets/loading-bg.png'),
+        //     fit: BoxFit.cover
+        //   ),
+        // ),
         child: Padding(
           padding: EdgeInsets.all(50),
           child: Column(

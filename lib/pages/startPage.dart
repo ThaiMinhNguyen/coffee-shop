@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:remove_diacritic/remove_diacritic.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class StartPage extends StatefulWidget {
 
@@ -43,7 +48,7 @@ class _StartPageState extends State<StartPage> {
 
     setState(() {
       searchResult = _data.
-      where((element) => element.toLowerCase().contains(searchController.text.toLowerCase())).toList();
+      where((element) => removeDiacritics(element.toLowerCase()).contains(removeDiacritics(searchController.text.toLowerCase()))).toList();
       isLoading = false;
     });
 
@@ -52,6 +57,7 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+    searchResult = _data;
     searchController.addListener(searchFunction);
   }
 
@@ -72,23 +78,30 @@ class _StartPageState extends State<StartPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: SearchBar(
-          controller: searchController,
-          hintText: 'Find something to order here',
-          leading: IconButton(
-            onPressed: (){
-              // print(searchController.text);
-            },
-            icon: Icon(Icons.search),
-          ),
-          trailing: [IconButton(
-            onPressed: () {
-              // print(menu[0]);
-            },
-            icon: Icon(
-              Icons.mic
+        child: Column(
+          children: <Widget>[
+            SearchBar(
+              controller: searchController,
+              hintText: 'Find something to order here',
+              leading: IconButton(
+                onPressed: (){
+                  // print(searchController.text);
+                },
+                icon: Icon(Icons.search),
+              ),
+              trailing: [IconButton(
+                onPressed: () {
+                  print(searchResult);
+                },
+                icon: Icon(
+                  Icons.mic
+                ),
+              )],
             ),
-          )],
+            Expanded(
+              child: getHome(),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -121,5 +134,50 @@ class _StartPageState extends State<StartPage> {
         ],
       ),
     );
+  }
+
+
+  getHome(){
+    
+    if(searchController.text.isEmpty){
+      return const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10,),
+          Text(
+            'Popular Product',
+            style: TextStyle(
+              fontFamily: 'MadimiOne',
+              fontSize: 25,
+            ),
+          ),
+          Row(
+            children: [
+              Text('data'),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return
+      isLoading ? Center(
+        child: SpinKitCircle(
+          color: Colors.brown.shade800,
+          size: 100,
+        ),
+      ) :ListView.builder(
+        itemCount: searchResult.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              onTap: (){},
+              title: Text(searchResult[index]),
+            ),
+          );
+        },
+      );
+    }
+
   }
 }
