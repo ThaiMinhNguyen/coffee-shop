@@ -1,3 +1,4 @@
+import 'package:coffee_shop/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +14,9 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+
+  AuthService _auth = AuthService();
+
   final searchController = TextEditingController();
   final List<String> _data = [
     'Cà phê',
@@ -74,7 +78,15 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Hello'),
+        title: Text('Heo'),
+        actions: [
+          ElevatedButton(
+            onPressed: () async {
+              await _auth.signOut();
+            },
+            child: Text('Sign out'),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -140,7 +152,7 @@ class _StartPageState extends State<StartPage> {
   getHome(){
     
     if(searchController.text.isEmpty){
-      return const Column(
+      return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -152,10 +164,23 @@ class _StartPageState extends State<StartPage> {
               fontSize: 25,
             ),
           ),
-          Row(
-            children: [
-              Text('data'),
-            ],
+          Container(
+            height: 200,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _data.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 200,
+                  child: Card(
+                    child: ListTile(
+                      onTap: (){},
+                      title: Text(_data[index]),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       );

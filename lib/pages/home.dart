@@ -92,7 +92,8 @@ class _HomeState extends State<Home> {
               SizedBox(height: 20,),
               TextButton(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/start');
+                  // Navigator.pushNamed(context, '/start');
+                  Navigator.pushNamed(context, '/sign_in');
                 },
                 child: Text(
                   'Get Start',
