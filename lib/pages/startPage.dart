@@ -71,14 +71,12 @@ class _StartPageState extends State<StartPage> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Heo'),
+        title: Text('Hello ${_auth.getUser()?.name}'),
         actions: [
           ElevatedButton(
             onPressed: () async {

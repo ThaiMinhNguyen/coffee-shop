@@ -7,7 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   MyUser? _userFromFirebase(User? user){
-    return user != null ? MyUser(uid: user.uid) : null;
+    return user != null ? MyUser(uid: user.uid, name: user.displayName) : null;
   }
 
   Stream<MyUser?> get user {
@@ -42,10 +42,11 @@ class AuthService {
   }
 
   //register with email
-  Future registerWithEmail(String email, String password) async {
+  Future registerWithEmail(String email, String password, String name) async {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      user?.updateDisplayName(name);
       return _userFromFirebase(user!);
     } catch (e) {
       print(e.toString());

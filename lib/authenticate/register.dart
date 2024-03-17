@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
 
   String email = '';
   String password = '';
+  String name = '';
   String error = '';
 
   @override
@@ -33,6 +34,16 @@ class _RegisterState extends State<Register> {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
+                  TextFormField(
+                    validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
+                    onChanged: (value) {
+                      setState(() {
+                        name = value;
+                      });
+                    },
+                    decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                  ),
+                  SizedBox(height: 20,),
                   TextFormField(
                     validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
                     onChanged: (value) {
@@ -70,7 +81,7 @@ class _RegisterState extends State<Register> {
                         setState(() {
                           loading = true;
                         });
-                        dynamic result = await _auth.registerWithEmail(email, password);
+                        dynamic result = await _auth.registerWithEmail(email, password, name);
                         if(result == null){
                           setState(() {
                             loading = false;
@@ -78,6 +89,7 @@ class _RegisterState extends State<Register> {
                           });
                         }
                         else {
+                          print(_auth.getUser()?.name);
                           Navigator.pushReplacementNamed(context, '/login_home');
                         }
                       }
