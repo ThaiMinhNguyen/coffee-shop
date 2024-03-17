@@ -4,13 +4,8 @@ import 'package:coffee_shop/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginHome extends StatefulWidget {
+class LoginHome extends StatelessWidget {
 
-  @override
-  State<LoginHome> createState() => _LoginHomeState();
-}
-
-class _LoginHomeState extends State<LoginHome> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<MyUser?>.value(

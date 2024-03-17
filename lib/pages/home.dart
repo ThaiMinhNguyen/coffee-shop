@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
               TextButton(
                 onPressed: (){
                   // Navigator.pushNamed(context, '/start');
-                  Navigator.pushNamed(context, '/sign_in');
+                  Navigator.pushNamed(context, '/login_home');
                 },
                 child: Text(
                   'Get Start',
