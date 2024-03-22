@@ -89,6 +89,7 @@ class _RegisterState extends State<Register> {
                           });
                         }
                         else {
+                          print(name);
                           print(_auth.getUser()?.name);
                           Navigator.pushReplacementNamed(context, '/login_home');
                         }

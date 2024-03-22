@@ -1,4 +1,5 @@
 import 'package:coffee_shop/services/auth.dart';
+import 'package:coffee_shop/style/coffee_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -39,9 +40,8 @@ class _StartPageState extends State<StartPage> {
   ];
 
   bool isLoading = false;
-
   List<String> searchResult = [];
-
+  String? userName;
   Future<void> searchFunction() async{
     setState(() {
       isLoading = true;
@@ -60,6 +60,7 @@ class _StartPageState extends State<StartPage> {
 
   @override
   void initState() {
+    userName = AuthService().getFireBaseUser()?.displayName;
     super.initState();
     searchResult = _data;
     searchController.addListener(searchFunction);
@@ -76,7 +77,7 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Hello ${_auth.getUser()?.name}'),
+        title: Text('Hello ${userName}'),
         actions: [
           ElevatedButton(
             onPressed: () async {
@@ -168,15 +169,7 @@ class _StartPageState extends State<StartPage> {
               scrollDirection: Axis.horizontal,
               itemCount: _data.length,
               itemBuilder: (context, index) {
-                return Container(
-                  width: 200,
-                  child: Card(
-                    child: ListTile(
-                      onTap: (){},
-                      title: Text(_data[index]),
-                    ),
-                  ),
-                );
+                return CoffeeCard(name: _data[index]);
               },
             ),
           ),

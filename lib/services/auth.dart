@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:coffee_shop/entity/user.dart';
+import 'package:coffee_shop/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   MyUser? _userFromFirebase(User? user){
     return user != null ? MyUser(uid: user.uid, name: user.displayName) : null;
@@ -14,7 +16,11 @@ class AuthService {
     return _auth.authStateChanges().map((User? user) => _userFromFirebase(user));
   }
 
-  MyUser? getUser(){
+  User? getFireBaseUser() {
+    return _auth.currentUser;
+  }
+
+  MyUser? getUser() {
     return _userFromFirebase(_auth.currentUser);
   }
 
@@ -46,7 +52,8 @@ class AuthService {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      user?.updateDisplayName(name);
+      await user?.updateDisplayName(name);
+      await DatabaseService(uid: user!.uid).updateUserData(name);
       return _userFromFirebase(user!);
     } catch (e) {
       print(e.toString());
