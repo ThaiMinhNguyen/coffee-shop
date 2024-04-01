@@ -20,6 +20,22 @@ class DatabaseService {
     });
   }
 
+
+  Future<int?> getUserAge() async {
+    try {
+      DocumentSnapshot userSnapshot = await userCollection.doc(uid).get();
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+        return userData['age'];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error getting user age: $e');
+      return null;
+    }
+  }
+
   // Future<int?> getUserData() async {
   //   final DocumentSnapshot snap = await userCollection.doc(uid).get();
   //   if (snap.exists) {

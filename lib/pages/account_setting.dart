@@ -14,6 +14,19 @@ class _AccountSettingState extends State<AccountSetting> {
   int userAge = 20;
 
   @override
+  void initState() {
+    super.initState();
+    getUserAge();
+  }
+
+  Future<void> getUserAge() async {
+    int? age = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserAge();
+    setState(() {
+      userAge = age!;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

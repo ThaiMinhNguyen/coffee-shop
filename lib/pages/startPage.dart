@@ -21,23 +21,22 @@ class _StartPageState extends State<StartPage> {
 
   final searchController = TextEditingController();
   final List<String> _data = [
-    'Cà phê',
+    'Espresso',
     'Bánh mì',
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Fig',
-    'Grape',
-    'Lemon',
-    'Mango',
-    'Orange',
-    'Papaya',
-    'Peach',
-    'Plum',
-    'Raspberry',
-    'Strawberry',
-    'Watermelon',
+    'Nước táo',
+    'Bạc xỉu',
+    'Cookie and cream',
+    'Freeze',
+    'Nước nho',
+    'Nước chanh',
+    'Nước xoài',
+    'Nước cam',
+    'Nước dừa',
+    'Hoa quả dầm',
+    'Trà đào',
+    'Sinh tố bơ',
+    'Sinh tố dâu tây',
+    'Nước ép dưa hấu',
   ];
 
   bool isLoading = false;
