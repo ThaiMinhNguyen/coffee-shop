@@ -1,3 +1,4 @@
+import 'package:coffee_shop/pages/account_setting.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/style/coffee_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,10 +81,13 @@ class _StartPageState extends State<StartPage> {
         title: Text('Hello ${userName}'),
         actions: [
           ElevatedButton(
-            onPressed: () async {
-              await _auth.signOut();
+            // onPressed: () async {
+            //   await _auth.signOut();
+            // },
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccountSetting() ));
             },
-            child: Text('Sign out'),
+            child: Text('Setting'),
           )
         ],
       ),
