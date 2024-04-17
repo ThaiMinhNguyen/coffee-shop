@@ -18,12 +18,17 @@ class _CoffeeCardState extends State<CoffeeCard> {
     return Container(
       width: 200,
       child: Card(
-
         child: Column(
           children: [
             ListTile(
               onTap: (){},
-              title: Text(widget.name),
+              title: Text(
+                widget.name,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             // Image.network(
             //     widget.url,

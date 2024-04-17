@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../entity/coffee.dart';
+import '../entity/item.dart';
 
 
 class DatabaseService {
@@ -64,7 +65,6 @@ class DatabaseService {
   Future<List<Coffee>> getProductsFromMenu() async {
     // Khởi tạo danh sách sản phẩm
     List<Coffee> products = [];
-
     try {
       // Lấy danh sách các documents từ collection menu
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('menu').get();
@@ -94,12 +94,13 @@ class DatabaseService {
         final Map<String, dynamic>? itemData = menuSnapshot.data() as Map<String, dynamic>?;
 
         if (itemData != null) {
-          final itemName = itemData['name'];
+          final name = itemName;
           final itemPrice = itemData['price'];
+          final url = itemData['url'];
 
           // Thêm mặt hàng vào giỏ hàng của người dùng
           final userCartRef = userCollection.doc(userId).collection('cart');
-          final itemRef = userCartRef.doc(itemName);
+          final itemRef = userCartRef.doc(name);
 
           // Kiểm tra xem mặt hàng đã tồn tại trong giỏ hàng chưa
           final itemSnapshot = await itemRef.get();
@@ -112,7 +113,8 @@ class DatabaseService {
           } else {
             // Nếu mặt hàng chưa tồn tại, thêm mới nó vào giỏ hàng
             await itemRef.set({
-              'name': itemName,
+              'name': name,
+              'url': url,
               'price': itemPrice,
               'quantity': quantity,
             });
@@ -128,22 +130,47 @@ class DatabaseService {
     }
   }
 
-
-
-  Future<List<Map<String, dynamic>>> getUserCart(String userId) async {
+  Future<List<Item>> getUserCart(String userId) async {
     try {
       final userCartRef = userCollection.doc(userId).collection('cart');
       final cartSnapshot = await userCartRef.get();
 
-      List<Map<String, dynamic>> cartItems = [];
+      List<Item> cartItems = [];
       cartSnapshot.docs.forEach((doc) {
-        cartItems.add(doc.data());
+        var data = doc.data();
+        var item = Item(
+          name: data['name'],
+          url: data['url'],
+          quantity: data['quantity'],
+          price: data['price'],
+        );
+        cartItems.add(item);
       });
-
       return cartItems;
     } catch (e) {
       print('Error getting user cart: $e');
       return [];
+    }
+  }
+
+  Future<void> updateQuantity(String userId, String itemName, int newQuantity) async {
+    try {
+      final userCartRef = FirebaseFirestore.instance.collection('users').doc(userId).collection('cart');
+      final itemRef = userCartRef.doc(itemName);
+
+      // Kiểm tra xem mặt hàng đã tồn tại trong giỏ hàng chưa
+      final itemSnapshot = await itemRef.get();
+      if (itemSnapshot.exists) {
+        // Nếu mặt hàng đã tồn tại, cập nhật số lượng
+        await itemRef.update({
+          'quantity': newQuantity,
+        });
+      } else {
+        // Nếu mặt hàng không tồn tại, thông báo lỗi
+        throw 'Item not found in cart: $itemName';
+      }
+    } catch (e) {
+      print('Error updating quantity in user cart: $e');
     }
   }
 
