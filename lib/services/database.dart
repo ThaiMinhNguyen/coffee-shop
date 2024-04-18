@@ -130,6 +130,28 @@ class DatabaseService {
     }
   }
 
+  Future<void> removeItemsWithZeroQuantityFromCart(String userId) async {
+    try {
+      final userCartRef = userCollection.doc(userId).collection('cart');
+      final cartSnapshot = await userCartRef.get();
+
+      // Duyệt qua danh sách các mặt hàng trong collection cart
+      for (var doc in cartSnapshot.docs) {
+        // Lấy thông tin của mỗi mặt hàng
+        final itemData = doc.data();
+        final quantity = itemData['quantity'];
+
+        // Kiểm tra xem mặt hàng có quantity = 0 hay không
+        if (quantity == 0) {
+          // Xóa mặt hàng có quantity = 0 khỏi collection cart
+          await doc.reference.delete();
+        }
+      }
+    } catch (e) {
+      print('Error removing items with zero quantity from cart: $e');
+    }
+  }
+
   Future<List<Item>> getUserCart(String userId) async {
     try {
       final userCartRef = userCollection.doc(userId).collection('cart');
@@ -201,6 +223,81 @@ class DatabaseService {
       return 0;
     }
   }
+
+  void addToFavorites(String userId, String itemName) async {
+    try {
+      final userFavoriteRef = userCollection.doc(userId).collection('favorite');
+      final itemRef = userFavoriteRef.doc(itemName);
+
+      // Kiểm tra xem món ăn đã tồn tại trong danh sách favorite chưa
+      final itemSnapshot = await itemRef.get();
+      if (!itemSnapshot.exists) {
+        // Nếu món ăn chưa tồn tại, thêm nó vào collection favorite
+        await itemRef.set({
+          'name': itemName,
+        });
+      }
+    } catch (e) {
+      print('Error adding item to favorites: $e');
+    }
+  }
+
+  void removeFromFavorites(String userId, String itemName) async {
+    try {
+      final userFavoriteRef = userCollection.doc(userId).collection('favorite');
+      final itemRef = userFavoriteRef.doc(itemName);
+
+      // Kiểm tra xem món ăn có tồn tại trong danh sách favorite không
+      final itemSnapshot = await itemRef.get();
+      if (itemSnapshot.exists) {
+        // Nếu món ăn tồn tại, xóa nó khỏi collection favorite
+        await itemRef.delete();
+      }
+    } catch (e) {
+      print('Error removing item from favorites: $e');
+    }
+  }
+
+  Future<bool> checkFavorite(String userId, String itemName) async {
+    try {
+      final userFavoriteRef = userCollection.doc(userId).collection('favorite');
+      final itemRef = userFavoriteRef.doc(itemName);
+
+      // Kiểm tra xem món ăn có tồn tại trong danh sách favorite không
+      final itemSnapshot = await itemRef.get();
+      if (itemSnapshot.exists) {
+        return true;
+      } else return false;
+    } catch (e) {
+      print('Error removing item from favorites: $e');
+      return false;
+    }
+  }
+
+  Future<List<Coffee>> getFavoriteItems(String userId) async {
+    try {
+      final userFavoriteRef = userCollection.doc(userId).collection('favorite');
+      final favoriteSnapshot = await userFavoriteRef.get();
+
+      List<Coffee> favoriteItems = [];
+      for (var doc in favoriteSnapshot.docs) {
+        Map<String, dynamic>? item = doc.data() as Map<String, dynamic>;
+        String itemName = item['name'];
+        final menuSnapshot = await menuCollection.doc(itemName).get();
+        if (menuSnapshot.exists){
+          // print(itemName);
+          final menuSnapshot = await menuCollection.doc(itemName).get();
+          final menuData = menuSnapshot.data() as Map<String, dynamic>;
+          favoriteItems.add(Coffee(name: itemName, img: menuData['url'], price: menuData['price']));
+        }
+      }
+      return favoriteItems;
+    } catch (e) {
+      print('Error getting favorite items: $e');
+      return [];
+    }
+  }
+
 
 
 }

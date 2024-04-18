@@ -76,6 +76,7 @@ class _CartItemState extends State<CartItem> {
                             }
                           });
                           await DatabaseService(uid: _auth.getFireBaseUser()!.uid).updateQuantity(_auth.getFireBaseUser()!.uid, widget.item.name, widget.item.quantity);
+                          await DatabaseService(uid: _auth.getFireBaseUser()!.uid).removeItemsWithZeroQuantityFromCart(_auth.getFireBaseUser()!.uid);
                         },
                       ),
                       Text(

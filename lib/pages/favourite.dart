@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coffee_shop/entity/coffee.dart';
 import 'package:coffee_shop/pages/account_setting.dart';
-import 'package:coffee_shop/pages/favourite.dart';
+import 'package:coffee_shop/pages/cart.dart';
 import 'package:coffee_shop/pages/startPage.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/style/cart_item.dart';
 import 'package:coffee_shop/style/coffee_card.dart';
+import 'package:coffee_shop/style/fav_item.dart';
 import 'package:coffee_shop/style/horizontal_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,47 +16,44 @@ import 'package:remove_diacritic/remove_diacritic.dart';
 import 'package:coffee_shop/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../entity/item.dart';
 
-
-class Cart extends StatefulWidget {
-  const Cart({super.key});
+class Favourite extends StatefulWidget {
+  const Favourite({super.key});
 
   @override
-  State<Cart> createState() => _CartState();
+  State<Favourite> createState() => _FavouriteState();
 }
 
-class _CartState extends State<Cart> {
-
-  int _currentTabIndex = 2;
-  List<Item> itemLs = [];
+class _FavouriteState extends State<Favourite> {
+  bool isRebuilt = true;
+  int _currentTabIndex = 1;
+  List<Coffee> favLs = [];
   AuthService _auth = AuthService();
   bool isEmpty = true;
 
   Future<void> loadItem() async {
-    List<Item> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserCart(_auth.getFireBaseUser()!.uid);
+    List<Coffee> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getFavoriteItems(_auth.getFireBaseUser()!.uid);
     setState(() {
-      itemLs = ls;
-      if(itemLs.isNotEmpty){
+      favLs = ls;
+      if(favLs.isNotEmpty){
         isEmpty = false;
       }
     });
   }
 
-  Future<void> removeZeroQuantityItem() async {
-    await DatabaseService(uid: _auth.getFireBaseUser()!.uid).removeItemsWithZeroQuantityFromCart(_auth.getFireBaseUser()!.uid);
-  }
-
-  Future<void> addItem() async {
-    print('Thêm bánh mì');
-    await DatabaseService(uid: _auth.getFireBaseUser()!.uid).addItemToUserCart(_auth.getFireBaseUser()!.uid, 'Bánh mì', 2);
+  void updateParentState() async {
+    print('goi ham parent');
+    setState(() {
+      isRebuilt = !isRebuilt;
+    });
   }
 
   @override
   void initState() {
-    // addItem();
+    print('init fav');
     loadItem();
     super.initState();
+    print(favLs);
   }
 
 
@@ -67,7 +65,7 @@ class _CartState extends State<Cart> {
         backgroundColor: Colors.brown,
         title: Center(
           child: Text(
-            'Cart',
+            'Favourite',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w500,
@@ -115,10 +113,13 @@ class _CartState extends State<Cart> {
         );
         break;
       case 1:
+        updateParentState();
+        break;
+      case 2:
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => Favourite(),
+            pageBuilder: (context, animation1, animation2) => Cart(),
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ),
@@ -139,7 +140,7 @@ class _CartState extends State<Cart> {
       return Container(
         child: Center(
           child: Text(
-            "Your cart is empty!\nPlease add more product :v",
+            "Your favourite is empty!\nPlease add more product :v",
             style: TextStyle(
               color: Colors.black54,
               fontSize: 20,
@@ -150,13 +151,16 @@ class _CartState extends State<Cart> {
     } else {
       return Container(
         child: ListView.builder(
-          itemCount: itemLs.length,
+          itemCount: favLs.length,
           itemBuilder: (context, index) {
-            return CartItem(itemLs[index]);
+            return FavItem(coffee: favLs[index]);
           },
         ),
       );
     }
   }
-
 }
+
+
+
+

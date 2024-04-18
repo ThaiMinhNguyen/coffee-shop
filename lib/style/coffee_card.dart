@@ -1,12 +1,13 @@
+import 'package:coffee_shop/style/detailed_coffee.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../entity/coffee.dart';
 
 class CoffeeCard extends StatefulWidget {
-  late String name;
-  late String url;
+  late Coffee coffee;
 
 
-  CoffeeCard({required this.name, required this.url});
+  CoffeeCard({required this.coffee});
 
   @override
   State<CoffeeCard> createState() => _CoffeeCardState();
@@ -21,9 +22,12 @@ class _CoffeeCardState extends State<CoffeeCard> {
         child: Column(
           children: [
             ListTile(
-              onTap: (){},
+              onTap: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: widget.coffee)));
+              },
               title: Text(
-                widget.name,
+                widget.coffee.name,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -43,7 +47,7 @@ class _CoffeeCardState extends State<CoffeeCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
-                    widget.url,
+                    widget.coffee.img,
                     fit: BoxFit.fill,
                     width: 170,
                   ),

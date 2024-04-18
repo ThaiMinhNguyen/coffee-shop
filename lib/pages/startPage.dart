@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coffee_shop/entity/coffee.dart';
 import 'package:coffee_shop/pages/account_setting.dart';
 import 'package:coffee_shop/pages/cart.dart';
+import 'package:coffee_shop/pages/favourite.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/style/coffee_card.dart';
 import 'package:coffee_shop/style/horizontal_card.dart';
@@ -189,7 +190,7 @@ class _StartPageState extends State<StartPage> {
               itemCount: _data.length,
               itemBuilder: (context, index) {
                 return CoffeeCard(
-                    name: _data[index].name, url: _data[index].img);
+                    coffee: _data[index]);
               },
             ),
           ),
@@ -240,8 +241,15 @@ class _StartPageState extends State<StartPage> {
 
   _onTap(int tabIndex) {
     switch (tabIndex) {
-      case 0:
-
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => Favourite(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
         break;
       case 2:
         // Navigator.of(context).push(
@@ -260,9 +268,9 @@ class _StartPageState extends State<StartPage> {
             MaterialPageRoute(builder: (context) => AccountSetting()));
         break;
     }
-    setState(() {
-      _currentTabIndex = tabIndex;
-    });
+    // setState(() {
+    //   _currentTabIndex = tabIndex;
+    // });
   }
 }
 
