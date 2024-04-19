@@ -2,6 +2,7 @@ import 'package:coffee_shop/authenticate/register.dart';
 import 'package:coffee_shop/authenticate/sign_in.dart';
 import 'package:coffee_shop/login_home.dart';
 import 'package:coffee_shop/pages/account_setting.dart';
+import 'package:coffee_shop/pages/favourite.dart';
 import 'package:coffee_shop/pages/home.dart';
 import 'package:coffee_shop/pages/startPage.dart';
 import 'package:coffee_shop/services/auth.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/login_home': (context) => LoginHome(),
         '/register': (context) => Register(),
         '/sign_in': (context) => SignIn(),
+        '/favorite': (context) => Favourite(),
         // '/setting': (context) => AccountSetting(),
       },
     );

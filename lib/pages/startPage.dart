@@ -5,6 +5,7 @@ import 'package:coffee_shop/pages/cart.dart';
 import 'package:coffee_shop/pages/favourite.dart';
 import 'package:coffee_shop/services/auth.dart';
 import 'package:coffee_shop/style/coffee_card.dart';
+import 'package:coffee_shop/style/detailed_coffee.dart';
 import 'package:coffee_shop/style/horizontal_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +231,11 @@ class _StartPageState extends State<StartPage> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: searchResult[index], route: '/start',))
+                      );
+                    },
                     title: Text(searchResult[index].name),
                   ),
                 );

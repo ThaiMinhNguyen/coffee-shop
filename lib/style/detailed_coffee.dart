@@ -9,8 +9,9 @@ import '../services/database.dart';
 
 class DetailedCoffee extends StatefulWidget {
   late Coffee coffee;
+  late String route;
 
-  DetailedCoffee({required this.coffee});
+  DetailedCoffee({required this.coffee, required this.route});
 
   @override
   State<DetailedCoffee> createState() => _DetailedCoffeeState();
@@ -19,6 +20,8 @@ class DetailedCoffee extends StatefulWidget {
 class _DetailedCoffeeState extends State<DetailedCoffee> {
 
   AuthService _auth = AuthService();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +45,7 @@ class _DetailedCoffeeState extends State<DetailedCoffee> {
               //   )
               // ),
               Expanded(
-                child: CardImageView(coffee: widget.coffee),
+                child: CardImageView(coffee: widget.coffee, route: widget.route,),
               ),
               const SizedBox(height: 30),
               // Section -> Description
@@ -133,10 +136,12 @@ class _DetailedCoffeeState extends State<DetailedCoffee> {
 
 class CardImageView extends StatefulWidget {
   final Coffee coffee;
+  late String route;
 
   CardImageView({
     super.key,
     required this.coffee,
+    required this.route
   });
 
   @override
@@ -187,8 +192,7 @@ class _CardImageViewState extends State<CardImageView> {
             ),
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Favourite()));
+                Navigator.pushReplacementNamed(context, widget.route);
               },
               icon: Icon(
                 Icons.keyboard_arrow_left,

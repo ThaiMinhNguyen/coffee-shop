@@ -32,7 +32,7 @@ class _FavItemState extends State<FavItem> {
       child: TextButton(
         onPressed: () {
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: widget.coffee)));
+              MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: widget.coffee, route: '/favorite',)));
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,

@@ -24,7 +24,7 @@ class _CoffeeCardState extends State<CoffeeCard> {
             ListTile(
               onTap: (){
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: widget.coffee)));
+                    MaterialPageRoute(builder: (context) => DetailedCoffee(coffee: widget.coffee, route: '/start',)));
               },
               title: Text(
                 widget.coffee.name,
