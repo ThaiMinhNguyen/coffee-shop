@@ -196,25 +196,25 @@ class DatabaseService {
     }
   }
 
-  Future<int> getTotalPrice(String userId) async {
+  Future<double> getTotalPrice(String userId) async {
     try {
       final userCartRef = userCollection.doc(userId).collection('cart');
       final cartSnapshot = await userCartRef.get();
 
-      int totalPrice = 0;
+      double totalPrice = 0;
 
       for (var doc in cartSnapshot.docs) {
         final itemData = doc.data() as Map<String, dynamic>;
         final itemName = itemData['name'];
-        final itemQuantity = itemData['quantity'];
-
+        int itemQuantity = itemData['quantity'];
+        double itemPrice = itemData['price'];
         // Lấy giá của mặt hàng từ collection menu
-        final menuSnapshot = await menuCollection.doc(itemName).get();
-        final menuData = menuSnapshot.data() as Map<String, dynamic>;
-        final itemPrice = menuData['price'];
+        // final menuSnapshot = await menuCollection.doc(itemName).get();
+        // final menuData = menuSnapshot.data() as Map<String, dynamic>;
+
 
         // Tính tổng giá của mặt hàng và cộng vào tổng giá của giỏ hàng
-        totalPrice += int.parse(itemPrice) * int.parse(itemQuantity);
+        totalPrice += (itemPrice) * itemQuantity;
       }
 
       return totalPrice;

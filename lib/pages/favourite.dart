@@ -32,20 +32,30 @@ class _FavouriteState extends State<Favourite> {
   bool isEmpty = true;
 
   Future<void> loadItem() async {
+    // if (!mounted) return;
     List<Coffee> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getFavoriteItems(_auth.getFireBaseUser()!.uid);
-    setState(() {
-      favLs = ls;
-      if(favLs.isNotEmpty){
-        isEmpty = false;
-      }
-    });
+    if(mounted){
+      setState(() {
+        favLs = ls;
+        if(favLs.isNotEmpty){
+          isEmpty = false;
+        }
+      });
+    }
   }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
   void updateParentState() async {
     print('goi ham parent');
-    setState(() {
-      isRebuilt = !isRebuilt;
-    });
+    if(mounted){
+      setState(() {
+        isRebuilt = !isRebuilt;
+      });
+    }
   }
 
   @override
@@ -150,11 +160,18 @@ class _FavouriteState extends State<Favourite> {
       );
     } else {
       return Container(
-        child: ListView.builder(
-          itemCount: favLs.length,
-          itemBuilder: (context, index) {
-            return FavItem(coffee: favLs[index]);
-          },
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: favLs.length,
+                itemBuilder: (context, index) {
+                  return FavItem(coffee: favLs[index]);
+                },
+              ),
+            ),
+
+          ],
         ),
       );
     }

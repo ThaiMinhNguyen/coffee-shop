@@ -7,8 +7,9 @@ import 'package:coffee_shop/services/database.dart';
 class CartItem extends StatefulWidget {
 
   late Item item;
+  final VoidCallback onSetState;
 
-  CartItem(this.item);
+  CartItem({required this.item, required this.onSetState});
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -77,6 +78,7 @@ class _CartItemState extends State<CartItem> {
                           });
                           await DatabaseService(uid: _auth.getFireBaseUser()!.uid).updateQuantity(_auth.getFireBaseUser()!.uid, widget.item.name, widget.item.quantity);
                           await DatabaseService(uid: _auth.getFireBaseUser()!.uid).removeItemsWithZeroQuantityFromCart(_auth.getFireBaseUser()!.uid);
+                          widget.onSetState();
                         },
                       ),
                       Text(
@@ -94,6 +96,7 @@ class _CartItemState extends State<CartItem> {
                             }
                           });
                           await DatabaseService(uid: _auth.getFireBaseUser()!.uid).updateQuantity(_auth.getFireBaseUser()!.uid, widget.item.name, widget.item.quantity);
+                          widget.onSetState();
                         },
                       ),
                     ],

@@ -17,7 +17,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../entity/item.dart';
 
-
 class Cart extends StatefulWidget {
   const Cart({super.key});
 
@@ -26,38 +25,63 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-
+  double totalPrice = 0;
   int _currentTabIndex = 2;
   List<Item> itemLs = [];
   AuthService _auth = AuthService();
   bool isEmpty = true;
 
   Future<void> loadItem() async {
-    List<Item> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserCart(_auth.getFireBaseUser()!.uid);
-    setState(() {
-      itemLs = ls;
-      if(itemLs.isNotEmpty){
-        isEmpty = false;
-      }
-    });
+    List<Item> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
+        .getUserCart(_auth.getFireBaseUser()!.uid);
+    if (mounted) {
+      setState(() {
+        itemLs = ls;
+        if (itemLs.isNotEmpty) {
+          isEmpty = false;
+        }
+      });
+    }
+  }
+
+  Future<void> getTotalPrice() async {
+    double price = await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
+        .getTotalPrice(_auth.getFireBaseUser()!.uid);
+    if (mounted) {
+      setState(() {
+        totalPrice = price;
+      });
+    }
   }
 
   Future<void> removeZeroQuantityItem() async {
-    await DatabaseService(uid: _auth.getFireBaseUser()!.uid).removeItemsWithZeroQuantityFromCart(_auth.getFireBaseUser()!.uid);
+    await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
+        .removeItemsWithZeroQuantityFromCart(_auth.getFireBaseUser()!.uid);
   }
 
   Future<void> addItem() async {
     print('Thêm bánh mì');
-    await DatabaseService(uid: _auth.getFireBaseUser()!.uid).addItemToUserCart(_auth.getFireBaseUser()!.uid, 'Bánh mì', 2);
+    await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
+        .addItemToUserCart(_auth.getFireBaseUser()!.uid, 'Bánh mì', 2);
+  }
+
+  void onSetState(){
+    getTotalPrice();
+    if(mounted){
+      print('Goi ham onSetState');
+      setState(() {
+
+      });
+    }
   }
 
   @override
   void initState() {
     // addItem();
     loadItem();
+    getTotalPrice();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +149,8 @@ class _CartState extends State<Cart> {
         );
         break;
       case 3:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => AccountSetting()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => AccountSetting()));
         break;
     }
     // setState(() {
@@ -135,7 +159,7 @@ class _CartState extends State<Cart> {
   }
 
   emptyOrNot() {
-    if(isEmpty){
+    if (isEmpty) {
       return Container(
         child: Center(
           child: Text(
@@ -149,14 +173,56 @@ class _CartState extends State<Cart> {
       );
     } else {
       return Container(
-        child: ListView.builder(
-          itemCount: itemLs.length,
-          itemBuilder: (context, index) {
-            return CartItem(itemLs[index]);
-          },
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: itemLs.length,
+                itemBuilder: (context, index) {
+                  return CartItem(item: itemLs[index], onSetState: onSetState,);
+                },
+              ),
+            ),
+            Divider(
+              height: 0,
+              thickness: 1,
+              color: Colors.black,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Total',
+                      style: GoogleFonts.roboto(
+                        fontSize: 45,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          (totalPrice).toString(),
+                          style: GoogleFonts.roboto(
+                            fontSize: 45,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '\$',
+                          style: GoogleFonts.roboto(
+                            fontSize: 45,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+            ),
+          ],
         ),
       );
     }
   }
-
 }
