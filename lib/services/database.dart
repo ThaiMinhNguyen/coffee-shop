@@ -16,6 +16,8 @@ class DatabaseService {
   Future updateUserData(String name) async {
     return await userCollection.doc(uid).set({
       'name': name,
+      'age': 22,
+      'role': 'user',
     });
   }
 
@@ -38,6 +40,21 @@ class DatabaseService {
     } catch (e) {
       print('Error getting user age: $e');
       return null;
+    }
+  }
+
+  Future<String> getUserRole() async {
+    try {
+      DocumentSnapshot userSnapshot = await userCollection.doc(uid).get();
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+        return userData['role'];
+      } else {
+        return '';
+      }
+    } catch (e) {
+      print('Error getting user role: $e');
+      return '';
     }
   }
 
