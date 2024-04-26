@@ -74,9 +74,10 @@ class DatabaseService {
         String name = doc.id;
         String img = doc['url'];
         double price = doc['price'];
+        String description = doc['description'];
 
         // Tạo đối tượng Coffee và thêm vào danh sách sản phẩm
-        products.add(Coffee(name: name, img: img, price: price));
+        products.add(Coffee(name: name, img: img, price: price, description: description));
       });
 
       return products;
@@ -288,7 +289,7 @@ class DatabaseService {
           // print(itemName);
           final menuSnapshot = await menuCollection.doc(itemName).get();
           final menuData = menuSnapshot.data() as Map<String, dynamic>;
-          favoriteItems.add(Coffee(name: itemName, img: menuData['url'], price: menuData['price']));
+          favoriteItems.add(Coffee(name: itemName, img: menuData['url'], price: menuData['price'], description: menuData['description']));
         }
       }
       return favoriteItems;

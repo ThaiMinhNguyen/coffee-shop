@@ -58,9 +58,16 @@ class _DetailedCoffeeState extends State<DetailedCoffee> {
                 ),
               ),
               const SizedBox(height: 15),
-              Text('this is the description'),
+              Text(
+                widget.coffee.description,
+                style: GoogleFonts.roboto(
+                  color: const Color(0xff979696),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               const SizedBox(height: 30),
-              const Text('this is the sized choice'),
+
               const SizedBox(height: 30),
               SizedBox(
                 height: 56,
