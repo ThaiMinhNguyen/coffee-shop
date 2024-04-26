@@ -25,7 +25,3 @@ class Wrapper extends StatelessWidget {
 }
 
 
-// if (DatabaseService(uid: user.uid!).getUserRole() == 'user') {
-// return StartPage();
-// } else if (DatabaseService(uid: user.uid!).getUserRole() == 'admin') {
-// return AdminHome();

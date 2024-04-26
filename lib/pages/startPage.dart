@@ -55,14 +55,17 @@ class _StartPageState extends State<StartPage> {
 
     //function to call api
     await Future.delayed(Duration(seconds: 4));
-
-    setState(() {
-      searchResult = _data
-          .where((coffee) => removeDiacritics(coffee.name.toLowerCase())
-              .contains(removeDiacritics(searchController.text.toLowerCase())))
-          .toList();
-      isLoading = false;
-    });
+    if(mounted) {
+      setState(() {
+        searchResult = _data
+            .where((coffee) =>
+            removeDiacritics(coffee.name.toLowerCase())
+                .contains(
+                removeDiacritics(searchController.text.toLowerCase())))
+            .toList();
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -153,7 +156,7 @@ class _StartPageState extends State<StartPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            label: 'Favarite',
+            label: 'Favorite',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_shopping_cart),
@@ -281,69 +284,3 @@ class _StartPageState extends State<StartPage> {
 
 
 
-// List<Coffee> _data = [
-//   Coffee(
-//       name: 'Espresso',
-//       img:
-//           'https://cdn.tgdd.vn/Files/2023/07/11/1537842/espresso-la-gi-nguyen-tac-pha-espresso-dung-chuan-202307120718497350.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Bánh mì',
-//       img: 'https://banhmipho.vn/wp-content/uploads/2021/08/vuong.jpg.png',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước táo',
-//       img:
-//           'https://cdn.nhathuoclongchau.com.vn/unsafe/800x0/https://cms-prod.s3-sgn09.fptcloud.com/nuoc_ep_tao_co_tac_dung_gi_nuoc_ep_tao_mix_voi_gi_cho_giau_dinh_duong_1_9ad02a8c5f.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Bạc xỉu',
-//       img:
-//           'https://grandgoldhotel.com/wp-content/uploads/2022/08/ly-ca-phe-bac-xiu-da.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Cookie and cream',
-//       img:
-//           'https://thehungrykitchenblog.com/wp-content/uploads/2022/08/Boozy-Cookies-and-Cream-Milkshake-1-2.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Freeze',
-//       img:
-//           'https://dvpmarket.com/resources/uploads/images/2018/07/Freeze-tra-xanh-tuoi-mat-thom-ngon-1.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước nho',
-//       img:
-//           'https://cdn.tgdd.vn//News/1520955//cach-lam-nuoc-ep-nho-hap-dan-845x564.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước chanh',
-//       img:
-//           'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/3/5/1020461/20210314_090326_7265.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước xoài',
-//       img:
-//           'https://dayphache.edu.vn/wp-content/uploads/2021/10/cach-lam-nuoc-ep-xoai.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước cam',
-//       img:
-//           'https://cdn.nhathuoclongchau.com.vn/unsafe/https://cms-prod.s3-sgn09.fptcloud.com/nuoc_cam_co_giai_ruou_khong_va_cach_giai_ruou_bang_nuoc_cam_Cropped_2e92569c5b.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Nước dừa',
-//       img:
-//           'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/8/29/dua-1-16617633760061376694743.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Hoa quả dầm',
-//       img:
-//           'https://www.thatlangon.com/wp-content/uploads/2020/04/hoa-qua-dam-6-scaled.jpg',
-//       price: 20),
-//   Coffee(
-//       name: 'Trà đào',
-//       img:
-//           'https://hocphachehanoi.com.vn/upload/userfiles/images/cach-lam-tra-dao-02.jpg',
-//       price: 20),
-// ];

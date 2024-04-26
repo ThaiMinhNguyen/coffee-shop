@@ -61,10 +61,6 @@ class DatabaseService {
   final CollectionReference menuCollection = FirebaseFirestore.instance.collection('menu');
 
   Future<void> addProductsToMenu(List<Coffee> products) async {
-    // Lấy tham chiếu đến collection menu
-    // CollectionReference menuCollection = FirebaseFirestore.instance.collection('menu');
-
-    // Thêm từng sản phẩm vào collection menu
     products.forEach((product) async {
       try {
         await menuCollection.doc(product.name).set({
@@ -76,6 +72,32 @@ class DatabaseService {
         print('Error adding ${product.name} to menu collection: $error');
       }
     });
+  }
+
+  Future<void> updateMenuItem(Coffee coffee) async {
+    try {
+      // Tìm tài liệu có tên là coffee.name trong collection 'menu'
+      final docSnapshot = await menuCollection.doc(coffee.name).get();
+
+      // Nếu tài liệu không tồn tại, tạo mới tài liệu với các thông tin từ đối tượng Coffee
+      if (!docSnapshot.exists) {
+        await menuCollection.doc(coffee.name).set({
+          'url': coffee.img,
+          'price': coffee.price,
+          'description': coffee.description,
+        });
+      } else {
+        // Nếu tài liệu tồn tại, cập nhật tài liệu với các thông tin từ đối tượng Coffee
+        await menuCollection.doc(coffee.name).update({
+          'url': coffee.img,
+          'price': coffee.price,
+          'description': coffee.description,
+        });
+      }
+    } catch (e) {
+      print('Error updating menu item: $e');
+      throw Exception('Error updating menu item');
+    }
   }
 
   // Hàm lấy danh sách sản phẩm từ collection menu
