@@ -67,3 +67,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//ToDo:
+// add function thanh toán for user => tạo hóa đơn
+// page admin:
+// + Trang chủ: Gồm các số liệu: Tổng doanh thu, số người dùng, số đơn hàng(tạo database), số món ăn
+// + Trang thêm món: Gồm các ô món ăn => ấn vào để sửa
+// + Trang xem danh sách người dùng/ hóa đơn
+// + Trang setting như user

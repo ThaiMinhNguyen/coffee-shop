@@ -60,18 +60,16 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> addItem() async {
-    print('Thêm bánh mì');
+    // print('Thêm bánh mì');
     await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
         .addItemToUserCart(_auth.getFireBaseUser()!.uid, 'Bánh mì', 2);
   }
 
-  void onSetState(){
-    getTotalPrice();
-    if(mounted){
+  void onSetState() {
+    loadItem();
+    if (mounted) {
       print('Goi ham onSetState');
-      setState(() {
-
-      });
+      setState(() {});
     }
   }
 
@@ -179,7 +177,10 @@ class _CartState extends State<Cart> {
               child: ListView.builder(
                 itemCount: itemLs.length,
                 itemBuilder: (context, index) {
-                  return CartItem(item: itemLs[index], onSetState: onSetState,);
+                  return CartItem(
+                    item: itemLs[index],
+                    onSetState: onSetState,
+                  );
                 },
               ),
             ),
@@ -190,39 +191,194 @@ class _CartState extends State<Cart> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total',
-                      style: GoogleFonts.roboto(
-                        fontSize: 45,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Row(
+              child: Column(
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          (totalPrice).toString(),
+                          'Total',
                           style: GoogleFonts.roboto(
                             fontSize: 45,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
-                          '\$',
-                          style: GoogleFonts.roboto(
-                            fontSize: 45,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              (totalPrice).toString(),
+                              style: GoogleFonts.roboto(
+                                fontSize: 45,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              '\$',
+                              style: GoogleFonts.roboto(
+                                fontSize: 45,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ]),
+                  Container(
+                    width: double.infinity,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      onPressed: () {
+                        showReceiptDialog(itemLs);
+                      },
+                      child: Text(
+                        'Place order',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white70
+                        ),
+                      ),
                     ),
-                  ]),
+                  )
+                ],
+              ),
             ),
           ],
         ),
       );
     }
+  }
+
+  showReceiptDialog(List<Item> ls) {
+    List<Text> nameLs = [];
+    nameLs.add(Text(
+      'Name',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+    ));
+    nameLs.addAll(ls.map((e) => Text(e.name)).toList());
+    List<Text> priceLs = [];
+    priceLs.add(Text(
+      'Price',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+    ));
+    priceLs.addAll(ls.map((e) => Text((e.price).toString())).toList());
+    List<Text> quantityLs = [];
+    quantityLs.add(Text(
+      'Quantity',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+    ));
+    quantityLs.addAll(ls.map((e) => Text((e.quantity).toString())).toList());
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                20.0,
+              ),
+            ),
+          ),
+          title: Text(
+            "This is your receipt",
+            style: TextStyle(fontSize: 24.0),
+          ),
+          content: Container(
+            height: 250,
+            child: Column(
+              children: [
+                Container(
+                  height: 150,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: nameLs,
+                              // children: ls.map((e) => Text(e.name)).toList(),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: priceLs,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: quantityLs,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'Total',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      '$totalPrice \$',
+                      style: TextStyle(
+                        fontSize: 20,
+
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    onPressed: () async {
+                      await DatabaseService(uid: _auth.getFireBaseUser()!.uid).fromCartToBill(_auth.getFireBaseUser()!.uid, _auth.getFireBaseUser()!.displayName!, totalPrice);
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => Cart(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Confirm order',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white70),
+                    )
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

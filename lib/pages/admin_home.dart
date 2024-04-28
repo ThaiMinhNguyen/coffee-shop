@@ -28,6 +28,9 @@ class _AdminHomeState extends State<AdminHome> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   int _currentTabIndex = 0;
   AuthService _auth = AuthService();
+  double total = 0;
+  int totalUser = 0;
+  int totalItem = 0;
 
 
   final searchController = TextEditingController();
@@ -63,7 +66,9 @@ class _AdminHomeState extends State<AdminHome> {
   void initState() {
     userName = AuthService().getFireBaseUser()?.displayName;
     super.initState();
-    // addMenu();
+    getTotal();
+    getTotalUser();
+    getTotalItem();
     loadProducts();
     searchResult = _data;
     searchController.addListener(searchFunction);
@@ -90,6 +95,33 @@ class _AdminHomeState extends State<AdminHome> {
   Future<void> addMenu() async {
     await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
         .addProductsToMenu(_data);
+  }
+
+  Future<void> getTotal() async {
+    double t = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getTotal();
+    if(mounted){
+      setState(() {
+        total = t;
+      });
+    }
+  }
+
+  Future<void> getTotalUser() async {
+    int tU = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getTotalUser();
+    if(mounted){
+      setState(() {
+        totalUser = tU;
+      });
+    }
+  }
+
+  Future<void> getTotalItem() async {
+    int tU = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getTotalProduct();
+    if(mounted){
+      setState(() {
+        totalItem = tU;
+      });
+    }
   }
 
   @override
@@ -217,7 +249,7 @@ class _AdminHomeState extends State<AdminHome> {
                             ),
                           ),
                           Text(
-                            '20000'+'\$',
+                            (total).toString()+'\$',
                             style: GoogleFonts.aBeeZee(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -242,7 +274,7 @@ class _AdminHomeState extends State<AdminHome> {
                             ),
                           ),
                           Text(
-                            '20000'+'\$',
+                            (totalUser).toString(),
                             style: GoogleFonts.aBeeZee(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -260,14 +292,14 @@ class _AdminHomeState extends State<AdminHome> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'Total Income',
+                            'Total Items',
                             style: GoogleFonts.aBeeZee(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            '20000'+'\$',
+                            (totalItem).toString(),
                             style: GoogleFonts.aBeeZee(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,

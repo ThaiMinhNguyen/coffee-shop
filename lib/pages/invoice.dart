@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:coffee_shop/entity/bill.dart';
 import 'package:coffee_shop/entity/coffee.dart';
 import 'package:coffee_shop/pages/account_setting.dart';
 import 'package:coffee_shop/pages/admin_home.dart';
 import 'package:coffee_shop/pages/favourite.dart';
 import 'package:coffee_shop/pages/startPage.dart';
 import 'package:coffee_shop/services/auth.dart';
+import 'package:coffee_shop/style/bill_card.dart';
 import 'package:coffee_shop/style/cart_item.dart';
 import 'package:coffee_shop/style/coffee_card.dart';
 import 'package:coffee_shop/style/horizontal_card.dart';
@@ -26,15 +28,14 @@ class Invoice extends StatefulWidget {
 }
 
 class _InvoiceState extends State<Invoice> {
-  double totalPrice = 0;
   int _currentTabIndex = 1;
-
+  List<Bill> billLs = [];
   AuthService _auth = AuthService();
   bool isEmpty = true;
 
 
-
   void onSetState(){
+    getAllBill();
     if(mounted){
       print('Goi ham onSetState');
       setState(() {
@@ -45,9 +46,20 @@ class _InvoiceState extends State<Invoice> {
 
   @override
   void initState() {
-    // addItem();
-
+    getAllBill();
     super.initState();
+  }
+
+  Future<void> getAllBill() async {
+    List<Bill> bills = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserBill(_auth.getFireBaseUser()!.uid);
+    if(mounted){
+      setState(() {
+        billLs = bills;
+        if(billLs.isNotEmpty){
+          isEmpty = false;
+        }
+      });
+    }
   }
 
   @override
@@ -58,7 +70,7 @@ class _InvoiceState extends State<Invoice> {
         backgroundColor: Colors.brown,
         title: Center(
           child: Text(
-            'Cart',
+            'Bills',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w500,
@@ -119,7 +131,7 @@ class _InvoiceState extends State<Invoice> {
       return Container(
         child: Center(
           child: Text(
-            "Your cart is empty!\nPlease add more product :v",
+            "There is no bill currently :v",
             style: TextStyle(
               color: Colors.black54,
               fontSize: 20,
@@ -131,50 +143,18 @@ class _InvoiceState extends State<Invoice> {
       return Container(
         child: Column(
           children: [
-            // Expanded(
-            //   // child: ListView.builder(
-            //   //   itemCount: itemLs.length,
-            //   //   itemBuilder: (context, index) {
-            //   //     return CartItem(item: itemLs[index], onSetState: onSetState,);
-            //   //   },
-            //   // ),
-            // ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: billLs.length,
+                itemBuilder: (context, index) {
+                  return BillItem(bill: billLs[index], onSetState: onSetState,);
+                },
+              ),
+            ),
             Divider(
               height: 0,
               thickness: 1,
               color: Colors.black,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total',
-                      style: GoogleFonts.roboto(
-                        fontSize: 45,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          (totalPrice).toString(),
-                          style: GoogleFonts.roboto(
-                            fontSize: 45,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          '\$',
-                          style: GoogleFonts.roboto(
-                            fontSize: 45,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]),
             ),
           ],
         ),

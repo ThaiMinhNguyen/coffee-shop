@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:coffee_shop/entity/bill.dart';
 import '../entity/coffee.dart';
 import '../entity/item.dart';
 
@@ -126,6 +126,18 @@ class DatabaseService {
     }
   }
 
+  Future<int> getTotalProduct() async {
+    try {
+      int total = 0;
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('menu').get();
+      total = querySnapshot.size;
+      return total;
+    } catch (error) {
+      print('Error getting total product: $error');
+      return 0;
+    }
+  }
+
   Future<void> addItemToUserCart(String userId, String itemName, int quantity) async {
     try {
       // Lấy thông tin mặt hàng từ collection menu
@@ -214,6 +226,124 @@ class DatabaseService {
       return [];
     }
   }
+
+  Future<bool> checkCartIsEmpty(String userId) async {
+    try {
+      final userCartRef = userCollection.doc(userId).collection('cart');
+      final cartSnapshot = await userCartRef.get();
+      if(cartSnapshot.docs.isEmpty){
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error convert cart to bill: $e');
+      return true;
+    }
+  }
+
+  Future<void> fromCartToBill(String userId, String userName, double total) async {
+    try {
+      final userCartRef = userCollection.doc(userId).collection('cart');
+      final cartSnapshot = await userCartRef.get();
+      if (cartSnapshot.docs.isNotEmpty) {
+        final billCollection = FirebaseFirestore.instance.collection('users').doc(userId).collection('bill');
+        final newBillDoc = billCollection.doc();
+        DateTime now = DateTime.now();
+        String formattedDate = "${now.year}-${now.month}-${now.day}";
+        await newBillDoc.set(
+            {
+          'name': userName,
+          'total': total,
+          'date': formattedDate,
+          'id' : newBillDoc.id,
+          }
+        );
+        await userCartRef.get().then((snapshot) {
+          for (DocumentSnapshot doc in snapshot.docs) {
+            doc.reference.delete();
+          }
+        });
+      }
+    } catch (e) {
+      print('Error convert cart to bill: $e');
+    }
+  }
+
+  Future<List<Bill>> getUserBill(String userId) async {
+    try {
+      final userSnapshot = await userCollection.get();
+      List<Bill> billItems = [];
+      for(DocumentSnapshot doc in userSnapshot.docs) {
+        var userBillRef = doc.reference.collection('bill');
+        var billSnapshot = await userBillRef.get();
+        billSnapshot.docs.forEach((doc) {
+          var data = doc.data();
+          var bill = Bill(
+              name: data['name'],
+              date: data['date'],
+              total: data['total'],
+              id : data['id'],
+          );
+          billItems.add(bill);
+        });
+      };
+      // print(billItems);
+      return billItems;
+    } catch (e) {
+      print('Error getting user cart: $e');
+      return [];
+    }
+  }
+
+  Future<double> getTotal() async {
+    try {
+      final userSnapshot = await userCollection.get();
+      double total = 0;
+      for(DocumentSnapshot doc in userSnapshot.docs) {
+        var userBillRef = doc.reference.collection('bill');
+        var billSnapshot = await userBillRef.get();
+        billSnapshot.docs.forEach((doc) {
+          var data = doc.data();
+          total += data['total'];
+        });
+      };
+      // print(total);
+      return total;
+    } catch (e) {
+      print('Error getting user cart: $e');
+      return 0;
+    }
+  }
+
+  Future<int> getTotalUser() async {
+    try {
+      final userSnapshot = await userCollection.get();
+      int total = userSnapshot.size;
+
+      print(total);
+      return total;
+    } catch (e) {
+      print('Error getting total user: $e');
+      return 0;
+    }
+  }
+
+  Future<void> deleteBill(Bill bill) async {
+    try {
+      final userSnapshot = await userCollection.get();
+      for(DocumentSnapshot doc in userSnapshot.docs) {
+        var userBillRef = doc.reference.collection('bill');
+        var billSnapshot = await userBillRef.doc(bill.id).get();
+        if(billSnapshot.exists){
+          await userBillRef.doc(bill.id).delete();
+        }
+      };
+    } catch (e) {
+      print('Error delete bill: $e');
+    }
+  }
+
 
   Future<void> updateQuantity(String userId, String itemName, int newQuantity) async {
     try {
@@ -337,6 +467,7 @@ class DatabaseService {
       return [];
     }
   }
+
 
 
 

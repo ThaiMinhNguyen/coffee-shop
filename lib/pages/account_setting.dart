@@ -21,9 +21,11 @@ class _AccountSettingState extends State<AccountSetting> {
 
   Future<void> getUserAge() async {
     int? age = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserAge();
-    setState(() {
-      userAge = age!;
-    });
+    if(mounted) {
+      setState(() {
+        userAge = age!;
+      });
+    }
   }
 
   @override
@@ -150,7 +152,8 @@ class _AccountSettingState extends State<AccountSetting> {
           child: TextButton(
             onPressed: () async {
               await _auth.signOut();
-              Navigator.pop(context);
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/sign_in');
             },
             child: Text('Sign out'),
           ),
