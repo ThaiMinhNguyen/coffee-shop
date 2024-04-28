@@ -23,6 +23,7 @@ class _EditCoffeeState extends State<EditCoffee> {
     return Container(
       width: 200,
       child: Card(
+        color: Colors.brown,
         child: Column(
             children: [
               ListTile(
@@ -32,6 +33,7 @@ class _EditCoffeeState extends State<EditCoffee> {
                 title: Text(
                   widget.coffee.name,
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

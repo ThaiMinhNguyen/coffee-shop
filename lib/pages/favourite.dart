@@ -77,6 +77,7 @@ class _FavouriteState extends State<Favourite> {
           child: Text(
             'Favourite',
             style: TextStyle(
+              color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.w500,
             ),

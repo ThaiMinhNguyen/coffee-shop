@@ -19,6 +19,7 @@ class _CoffeeCardState extends State<CoffeeCard> {
     return Container(
       width: 200,
       child: Card(
+        color: Colors.brown,
         child: Column(
           children: [
             ListTile(
@@ -29,6 +30,7 @@ class _CoffeeCardState extends State<CoffeeCard> {
               title: Text(
                 widget.coffee.name,
                 style: TextStyle(
+                  color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),

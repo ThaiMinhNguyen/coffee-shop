@@ -72,6 +72,7 @@ class _InvoiceState extends State<Invoice> {
           child: Text(
             'Bills',
             style: TextStyle(
+              color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.w500,
             ),
@@ -150,11 +151,6 @@ class _InvoiceState extends State<Invoice> {
                   return BillItem(bill: billLs[index], onSetState: onSetState,);
                 },
               ),
-            ),
-            Divider(
-              height: 0,
-              thickness: 1,
-              color: Colors.black,
             ),
           ],
         ),

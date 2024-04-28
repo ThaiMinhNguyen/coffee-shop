@@ -69,7 +69,10 @@ class _CartItemState extends State<CartItem> {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.remove),
+                        icon: Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                        ),
                         onPressed: () async {
                           setState(() {
                             if(widget.item.quantity > 0){
@@ -88,7 +91,8 @@ class _CartItemState extends State<CartItem> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.add),
+                        icon: Icon(Icons.add,
+                          color: Colors.white,),
                         onPressed: () async {
                           setState(() {
                             if(widget.item.quantity < 100){

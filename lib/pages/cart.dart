@@ -91,6 +91,7 @@ class _CartState extends State<Cart> {
           child: Text(
             'Cart',
             style: TextStyle(
+              color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.w500,
             ),
@@ -238,7 +239,7 @@ class _CartState extends State<Cart> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.white70
+                            color: Colors.white,
                         ),
                       ),
                     ),

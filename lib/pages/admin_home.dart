@@ -129,7 +129,14 @@ class _AdminHomeState extends State<AdminHome> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Hello ${userName}'),
+        title: Text(
+          'Hello ${userName}',
+          style: TextStyle(
+            fontFamily: 'MadimiOne',
+            fontSize: 25,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           CircleAvatar(
             backgroundImage: AssetImage('assets/coffee-icon1.png'),
@@ -237,13 +244,15 @@ class _AdminHomeState extends State<AdminHome> {
                   SizedBox(
                     height: 180,
                     child: Card(
-                      elevation: 20,
+                      color: Colors.brown,
+                      // elevation: 20,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             'Total Income',
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -251,6 +260,7 @@ class _AdminHomeState extends State<AdminHome> {
                           Text(
                             (total).toString()+'\$',
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -262,13 +272,15 @@ class _AdminHomeState extends State<AdminHome> {
                   SizedBox(
                     height: 180,
                     child: Card(
-                      elevation: 20,
+                      color: Colors.brown,
+                      // elevation: 20,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             'Total User',
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -276,6 +288,7 @@ class _AdminHomeState extends State<AdminHome> {
                           Text(
                             (totalUser).toString(),
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -287,13 +300,15 @@ class _AdminHomeState extends State<AdminHome> {
                   SizedBox(
                     height: 180,
                     child: Card(
-                      elevation: 20,
+                      color: Colors.brown,
+                      // elevation: 20,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             'Total Items',
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -301,6 +316,7 @@ class _AdminHomeState extends State<AdminHome> {
                           Text(
                             (totalItem).toString(),
                             style: GoogleFonts.aBeeZee(
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -313,7 +329,23 @@ class _AdminHomeState extends State<AdminHome> {
               ),
             )
           ),
-
+          Container(
+            margin: EdgeInsets.all(10),
+            alignment: Alignment.bottomRight,
+            child: IconButton(
+              onPressed: () {
+                showEditDialog(Coffee(name: '', img: '', price: 0, description: ''), 'Add product to menu');
+              },
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.brown,
+                padding: EdgeInsets.all(15),
+              ),
+            ),
+          ),
         ],
       );
     } else {
@@ -330,7 +362,7 @@ class _AdminHomeState extends State<AdminHome> {
           return Card(
             child: ListTile(
               onTap: () {
-                showEditDialog(searchResult[index]);
+                showEditDialog(searchResult[index], 'Edit product');
               },
               title: Text(searchResult[index].name),
             ),
@@ -359,7 +391,7 @@ class _AdminHomeState extends State<AdminHome> {
     }
   }
 
-  showEditDialog(Coffee coffee) {
+  showEditDialog(Coffee coffee, String title) {
     String name = coffee.name;
     double price = coffee.price;
     String url = coffee.img;
@@ -377,7 +409,7 @@ class _AdminHomeState extends State<AdminHome> {
             ),
           ),
           title: Text(
-            "Edit Menu",
+            title,
             style: TextStyle(fontSize: 24.0),
           ),
           content: Container(

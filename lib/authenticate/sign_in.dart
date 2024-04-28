@@ -25,7 +25,14 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.brown.shade100,
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Sign in Anon'),
+        title: Text(
+          'Sign in',
+          style: TextStyle(
+            fontFamily: 'MadimiOne',
+            fontSize: 25,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Form(
         key: _keyForm,

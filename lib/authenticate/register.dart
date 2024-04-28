@@ -26,7 +26,12 @@ class _RegisterState extends State<Register> {
       backgroundColor: Colors.brown.shade100,
         appBar: AppBar(
           backgroundColor: Colors.brown,
-          title: Text('Register'),
+          title: Text('Register',
+            style: TextStyle(
+              fontFamily: 'MadimiOne',
+              fontSize: 25,
+              color: Colors.white,
+            ),),
         ),
         body: Form(
           key: _keyForm,

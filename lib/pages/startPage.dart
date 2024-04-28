@@ -106,7 +106,14 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: Text('Hello ${userName}'),
+        title: Text(
+          'Hello ${userName}',
+          style: TextStyle(
+            fontFamily: 'MadimiOne',
+            fontSize: 25,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           CircleAvatar(
             backgroundImage: AssetImage('assets/coffee-icon1.png'),
