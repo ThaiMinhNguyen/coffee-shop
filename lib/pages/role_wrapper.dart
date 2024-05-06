@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../entity/user.dart';
 import '../services/database.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'admin_home.dart';
 
 class RoleWrapper extends StatelessWidget {
@@ -13,7 +14,10 @@ class RoleWrapper extends StatelessWidget {
       future: getUserRole(context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return SpinKitCircle(
+            color: Colors.white,
+            size: 100,
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
