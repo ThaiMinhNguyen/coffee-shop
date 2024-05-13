@@ -47,14 +47,14 @@ class _BillItemState extends State<BillItem> {
                 Text(
                   "Name",
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   widget.bill.name,
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -66,14 +66,14 @@ class _BillItemState extends State<BillItem> {
                 Text(
                   "Price",
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   (widget.bill.total).toString() + '\$',
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -85,14 +85,14 @@ class _BillItemState extends State<BillItem> {
                 Text(
                   "Date",
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   widget.bill.date,
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
