@@ -470,7 +470,6 @@ class _AdminHomeState extends State<AdminHome> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
-
                     ),
                     child: Text(
                       "Submit",

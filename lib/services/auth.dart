@@ -47,6 +47,15 @@ class AuthService {
     }
   }
 
+  // Future signInWithFacebook() async {
+  //   try {
+  //     await _auth.s
+  //   } catch (e) {
+  //     print("Error log in with facebook: $e");
+  //     return null;
+  //   }
+  // }
+
   //register with email
   Future registerWithEmail(String email, String password, String name) async {
     try{
@@ -67,6 +76,27 @@ class AuthService {
       return await _auth.signOut();
     } catch(e){
       print(e.toString());
+    }
+  }
+
+  Future<bool> changePassword(String oldPassword, String newPassword) async {
+    try {
+      // Lấy người dùng hiện tại
+      User? user = _auth.currentUser;
+
+      // Tạo AuthCredential để xác thực mật khẩu cũ
+      AuthCredential credential = EmailAuthProvider.credential(email: user!.email!, password: oldPassword);
+
+      // Reauthenticate người dùng bằng AuthCredential
+      await user.reauthenticateWithCredential(credential);
+
+      // Nếu reauthentication thành công, cập nhật mật khẩu mới
+      await user.updatePassword(newPassword);
+      print("Password updated successfully");
+      return true; // Trả về true nếu mọi thứ thành công
+    } catch (e) {
+      print("Error changing password: $e");
+      return false; // Trả về false nếu có lỗi xảy ra
     }
   }
 }
