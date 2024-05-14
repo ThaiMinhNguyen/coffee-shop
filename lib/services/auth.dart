@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:coffee_shop/entity/user.dart';
 import 'package:coffee_shop/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
 
@@ -47,14 +48,25 @@ class AuthService {
     }
   }
 
-  // Future signInWithFacebook() async {
-  //   try {
-  //     await _auth.s
-  //   } catch (e) {
-  //     print("Error log in with facebook: $e");
-  //     return null;
-  //   }
-  // }
+  Future<User?> signInWithGoogle() async {
+    try {
+      final googleAccount = await GoogleSignIn().signIn();
+
+      final googleAuth = await googleAccount?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+      return userCredential.user;
+    } catch (e) {
+      print("Error log in using google: $e");
+      return null;
+    }
+  }
 
   //register with email
   Future registerWithEmail(String email, String password, String name) async {
@@ -73,7 +85,11 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      if(GoogleSignIn().isSignedIn()){
+        GoogleSignIn().signOut();
+      } else {
+        return await _auth.signOut();
+      }
     } catch(e){
       print(e.toString());
     }

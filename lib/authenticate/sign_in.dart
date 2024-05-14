@@ -2,6 +2,9 @@ import 'package:coffee_shop/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_shop/style/constants.dart';
+import 'package:sign_in_button/sign_in_button.dart';
+
+
 
 class SignIn extends StatefulWidget {
 
@@ -38,77 +41,98 @@ class _SignInState extends State<SignIn> {
         key: _keyForm,
         child: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: Column(
-            children: [
-              TextFormField(
-                validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
-                onChanged: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
-              ),
-              SizedBox(height: 20,),
-              TextFormField(
-                validator: (value) => value!.length < 6 ? 'Please enter a 6+ length password' : null,
-                obscureText: obscure,
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                decoration: textInputDecoration.copyWith(
-                  hintText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.remove_red_eye),
-                      onPressed: () {
-                        setState(() {
-                          obscure = !obscure;
-                        });
-                      }
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
+                  onChanged: (value) {
+                    setState(() {
+                      email = value;
+                    });
+                  },
+                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                ),
+                SizedBox(height: 20,),
+                TextFormField(
+                  validator: (value) => value!.length < 6 ? 'Please enter a 6+ length password' : null,
+                  obscureText: obscure,
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.remove_red_eye),
+                        onPressed: () {
+                          setState(() {
+                            obscure = !obscure;
+                          });
+                        }
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  if(_keyForm.currentState!.validate()){
-                    setState(() {
-                      loading = true;
-                    });
-                    dynamic result = await _auth.signInWithEmail(email, password);
-                    if(result == null){
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    if(_keyForm.currentState!.validate()){
                       setState(() {
-                        loading = false;
-                        error = 'This account does not exist';
+                        loading = true;
                       });
-                    } else {
-                      Navigator.pushReplacementNamed(context, '/login_home');
+                      dynamic result = await _auth.signInWithEmail(email, password);
+                      if(result == null){
+                        setState(() {
+                          loading = false;
+                          error = 'This account does not exist';
+                        });
+                      } else {
+                        Navigator.pushReplacementNamed(context, '/login_home');
+                      }
                     }
-                  }
-                },
-                child: Text('Sign in'),
-              ),
-              Text(
-                error,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
+                  },
+                  child: Text('Sign in'),
                 ),
-              ),
-              SizedBox(height: 20,),
-              Text('If you dont have account, please register'),
-              SizedBox(height: 20,),
-              ElevatedButton(
-                onPressed: (){
-                  setState(() {
-                    Navigator.pushReplacementNamed(context, '/register');
-                  });
-                },
-                child: Text('Register'),
-              )
-            ],
+                Text(
+                  error,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                  ),
+                ),
+                Divider(height: 1,),
+                Container(
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  child: SignInButton(
+                    padding: EdgeInsets.all(5),
+                    Buttons.google,
+                    text: 'Sign in with Google',
+                    onPressed: () async {
+                      try {
+                        final user = await _auth.signInWithGoogle();
+                        if(user != null && mounted){
+                          Navigator.pushReplacementNamed(context, '/start');
+                        }
+                      } catch (e) {
+                        print('login failed');
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Text('If you dont have account, please register'),
+                SizedBox(height: 20,),
+                ElevatedButton(
+                  onPressed: (){
+                    setState(() {
+                      Navigator.pushReplacementNamed(context, '/register');
+                    });
+                  },
+                  child: Text('Register'),
+                )
+              ],
+            ),
           ),
         )
       )
