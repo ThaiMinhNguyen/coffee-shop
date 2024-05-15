@@ -2,6 +2,7 @@ import 'package:coffee_shop/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
+import '../style/change_password.dart';
 import '../style/constants.dart';
 
 class AccountSetting extends StatefulWidget {
@@ -171,122 +172,133 @@ class _AccountSettingState extends State<AccountSetting> {
     );
   }
 
-  showEditDialog(String title) {
-    final _keyForm = GlobalKey<FormState>();
-    bool isRight = false;
-    bool obscure = true;
-    String? name = _auth.getFireBaseUser()?.email;
-    String oldpass = "";
-    String newpass = "";
+  void showEditDialog(String title) {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                20.0,
-              ),
-            ),
-          ),
-          title: Text(
-            title,
-            style: TextStyle(fontSize: 24.0),
-          ),
-          content: Container(
-            height: 200,
-            child: Form(
-              key: _keyForm,
-              child: Column(
-                children: [
-                  TextFormField(
-                    validator: (value) => value!.length < 6 ? 'Wrong password' : null,
-                    obscureText: obscure,
-                    onChanged: (value) {
-                      setState(() {
-                        oldpass = value;
-                      });
-                    },
-                    decoration: textInputDecoration.copyWith(
-                      hintText: 'Old Password',
-                      suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          onPressed: () {
-                            setState(() {
-                              obscure = !obscure;
-                            });
-                          }
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) => value!.length < 6 ? 'Please enter a 6+ length password' : null,
-                    obscureText: obscure,
-                    onChanged: (value) {
-                      setState(() {
-                        newpass = value;
-                      });
-                    },
-                    decoration: textInputDecoration.copyWith(
-                      hintText: 'New Password',
-                      suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          onPressed: () {
-                            setState(() {
-                              obscure = !obscure;
-                            });
-                          }
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_keyForm.currentState!.validate()) {
-                        if (!(await _auth.changePassword(oldpass, newpass))) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('Incorrect password. Please try again.'),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Successful'),
-                              content: Text('Change password successfully'),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
-
-                    },
-                    child: Text('Confirm change'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        return ChangePasswordDialog(title: title);
       },
     );
   }
+
+  // showEditDialog(String title) {
+  //   final _keyForm = GlobalKey<FormState>();
+  //   bool isRight = false;
+  //   bool obscure = true;
+  //   String? name = _auth.getFireBaseUser()?.email;
+  //   String oldpass = "";
+  //   String newpass = "";
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.all(
+  //             Radius.circular(
+  //               20.0,
+  //             ),
+  //           ),
+  //         ),
+  //         title: Text(
+  //           title,
+  //           style: TextStyle(fontSize: 24.0),
+  //         ),
+  //         content: Container(
+  //           height: 250,
+  //           child: Form(
+  //             key: _keyForm,
+  //             child: Column(
+  //               children: [
+  //                 TextFormField(
+  //                   validator: (value) => value!.length < 6 ? 'Wrong password' : null,
+  //                   obscureText: obscure,
+  //                   onChanged: (value) {
+  //                     setState(() {
+  //                       oldpass = value;
+  //                     });
+  //                   },
+  //                   decoration: textInputDecoration.copyWith(
+  //                     hintText: 'Old Password',
+  //                     suffixIcon: IconButton(
+  //                         icon: Icon(Icons.remove_red_eye),
+  //                         onPressed: () {
+  //                           setState(() {
+  //                             obscure = !obscure;
+  //                             print("change obscure");
+  //                           });
+  //                         }
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 SizedBox(height: 20,),
+  //                 TextFormField(
+  //                   validator: (value) => value!.length < 6 ? 'Please enter a 6+ length password' : null,
+  //                   obscureText: obscure,
+  //                   onChanged: (value) {
+  //                     setState(() {
+  //                       newpass = value;
+  //                     });
+  //                   },
+  //                   decoration: textInputDecoration.copyWith(
+  //                     hintText: 'New Password',
+  //                     suffixIcon: IconButton(
+  //                         icon: Icon(Icons.remove_red_eye),
+  //                         onPressed: () {
+  //                           setState(() {
+  //                             obscure = !obscure;
+  //                           });
+  //                         }
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 SizedBox(height: 20),
+  //                 ElevatedButton(
+  //                   onPressed: () async {
+  //                     if (_keyForm.currentState!.validate()) {
+  //                       if (!(await _auth.changePassword(oldpass, newpass))) {
+  //                         showDialog(
+  //                           context: context,
+  //                           builder: (context) => AlertDialog(
+  //                             title: Text('Error'),
+  //                             content: Text('Incorrect password. Please try again.'),
+  //                             actions: <Widget>[
+  //                               ElevatedButton(
+  //                                 onPressed: () {
+  //                                   Navigator.of(context).pop();
+  //                                 },
+  //                                 child: Text('OK'),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         );
+  //                       } else {
+  //                         showDialog(
+  //                           context: context,
+  //                           builder: (context) => AlertDialog(
+  //                             title: Text('Successful'),
+  //                             content: Text('Change password successfully'),
+  //                             actions: <Widget>[
+  //                               ElevatedButton(
+  //                                 onPressed: () {
+  //                                   Navigator.of(context).pop();
+  //                                 },
+  //                                 child: Text('OK'),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         );
+  //                       }
+  //                     }
+  //
+  //                   },
+  //                   child: Text('Confirm change'),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

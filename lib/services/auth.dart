@@ -85,7 +85,7 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-      if(GoogleSignIn().isSignedIn()){
+      if(await GoogleSignIn().isSignedIn()){
         GoogleSignIn().signOut();
       } else {
         return await _auth.signOut();
