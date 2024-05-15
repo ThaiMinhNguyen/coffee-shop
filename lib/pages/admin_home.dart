@@ -127,6 +127,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.brown,
         title: Text(
@@ -199,154 +200,160 @@ class _AdminHomeState extends State<AdminHome> {
 
   getHome() {
     if (searchController.text.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Popular Product',
-            style: TextStyle(
-              fontFamily: 'MadimiOne',
-              fontSize: 25,
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Container(
-            height: 200,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _data.length,
-              itemBuilder: (context, index) {
-                return EditCoffee(
-                    coffee: _data[index]);
-              },
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Statistic',
-            style: TextStyle(
-              fontFamily: 'MadimiOne',
-              fontSize: 25,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 180,
-                    child: Card(
-                      color: Colors.brown,
-                      // elevation: 20,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Total Income',
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            (total).toString()+'\$',
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 180,
-                    child: Card(
-                      color: Colors.brown,
-                      // elevation: 20,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Total User',
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            (totalUser).toString(),
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 180,
-                    child: Card(
-                      color: Colors.brown,
-                      // elevation: 20,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Total Items',
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            (totalItem).toString(),
-                            style: GoogleFonts.aBeeZee(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              onPressed: () {
-                showEditDialog(Coffee(name: '', img: '', price: 0, description: ''), 'Add product to menu');
-              },
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.brown,
-                padding: EdgeInsets.all(15),
+            Text(
+              'Popular Product',
+              style: TextStyle(
+                fontFamily: 'MadimiOne',
+                fontSize: 25,
               ),
             ),
-          ),
-        ],
+            Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _data.length,
+                itemBuilder: (context, index) {
+                  return EditCoffee(
+                      coffee: _data[index]);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Statistic',
+              style: TextStyle(
+                fontFamily: 'MadimiOne',
+                fontSize: 25,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 180,
+                      child: Card(
+                        color: Colors.brown,
+                        // elevation: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Total Income',
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              (total).toString()+'\$',
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 180,
+                      child: Card(
+                        color: Colors.brown,
+                        // elevation: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Total User',
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              (totalUser).toString(),
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 180,
+                      child: Card(
+                        color: Colors.brown,
+                        // elevation: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Total Items',
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              (totalItem).toString(),
+                              style: GoogleFonts.aBeeZee(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    onPressed: () {
+                      showEditDialog(Coffee(name: '', img: '', price: 0, description: ''), 'Add product to menu');
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                      padding: EdgeInsets.all(15),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     } else {
       return isLoading
@@ -401,6 +408,7 @@ class _AdminHomeState extends State<AdminHome> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          // scrollable: true,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(
@@ -413,7 +421,7 @@ class _AdminHomeState extends State<AdminHome> {
             style: TextStyle(fontSize: 24.0),
           ),
           content: Container(
-            height: 400,
+            height: 450,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
