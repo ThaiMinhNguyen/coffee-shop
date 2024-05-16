@@ -81,15 +81,15 @@ Quản trị viên có thể xem các báo cáo và thống kê về doanh số 
 
 <h1>Sơ đồ use-case</h1>
 
-<img src="images/User_CoffeeShop.jpg" alt="Logo" width="80" height="80">
+<img src="images/User_CoffeeShop.jpg" alt="Logo">
 <h3 align="center">User Use-case</h3>
 
-<img src="images/Admin_CoffeeShop.jpg" alt="Logo" width="80" height="80">
+<img src="images/Admin_CoffeeShop.jpg" alt="Logo">
 <h3 align="center">Admin Use-case</h3>
 
 <h1>Sơ đồ cơ sở dữ liệu</h1>
 
-<img src="images/firestore1.drawio.png" alt="Logo" width="80" height="80">
+<img src="images/firestore1.drawio.png" alt="Logo">
 <h3 align="center">Sơ đồ database</h3>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
