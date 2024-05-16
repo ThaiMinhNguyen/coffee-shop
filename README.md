@@ -45,10 +45,12 @@
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
+<pre>
 Tổng quan về dự án
 Đặt vấn đề
 Mô tả vấn đề mà dự án của bạn muốn giải quyết.
 Tại sao vấn đề này quan trọng?
+</pre>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 Mục tiêu
 Những mục tiêu mà dự án của bạn hướng tới.
