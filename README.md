@@ -102,4 +102,69 @@ Quản trị viên có thể xem các báo cáo và thống kê về doanh số 
 <!-- INTERFACE -->
 <h1>Giao diện</h1>
 
+<h1>Giao diện cơ bản</h1>
+
+<img src="images/welcome_page.png" alt="Logo">
+<h4 align="center">Trang welcome</h4>
+
+<img src="images/sign_in.png" alt="Logo">
+<h4 align="center">Trang sign in</h4>
+
+<pre>
+User có thể sign in bằng email hoặc sign in thông qua tài khoản Google
+Admin chỉ có thể sign in bằng email
+</pre>
+
+<img src="images/register.png" alt="Logo">
+<h4 align="center">Trang Register</h4>
+
+<h2>Giao diện khi đang nhập bằng tài khoản user</h2>
+
+<img src="images/user_main_page.png" alt="Logo">
+<h4 align="center">Trang chủ</h4>
+
+<img src="images/search.png" alt="Logo">
+<h4 align="center">Thanh search</h4>
+
+<img src="images/user_fav_page.png" alt="Logo">
+<h4 align="center">Trang favourite</h4>
+
+<img src="images/detailed_product.png" alt="Logo">
+<h4 align="center">Trang chi tiết sản phẩm</h4>
+
+<img src="images/cart.png" alt="Logo">
+<h4 align="center">Trang giỏ hàng</h4>
+
+<img src="images/order_confirm.png" alt="Logo">
+<h4 align="center">Xác nhận đặt hàng</h4>
+
+<img src="images/acc_setting.png" alt="Logo">
+<h4 align="center">Trang thông tin tài khoản</h4>
+
+<img src="images/change_pass.png" alt="Logo">
+<h4 align="center">Đổi mật khẩu</h4>
+
+<h2>Giao diện khi đang nhập bằng tài khoản admin</h2>
+
+<img src="images/admin_main.png" alt="Logo">
+<h4 align="center">Trang chủ</h4>
+
+<img src="images/search.png" alt="Logo">
+<h4 align="center">Thanh search</h4>
+
+<img src="images/edit_product.png" alt="Logo">
+<h4 align="center">Bảng chỉnh sửa thông tin món ăn</h4>
+
+<img src="images/add_product.png" alt="Logo">
+<h4 align="center">Bảng thêm món ăn</h4>
+
+<img src="images/admin_bill.png" alt="Logo">
+<h4 align="center">Trang danh sách hóa đơn</h4>
+
+<img src="images/acc_setting.png" alt="Logo">
+<h4 align="center">Trang thông tin tài khoản</h4>
+
+<img src="images/change_pass.png" alt="Logo">
+<h4 align="center">Đổi mật khẩu</h4>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
