@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/your_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/coffee-icon1.png" alt="Logo" width="80" height="80">
   </a>
   <h3 align="center">Tên Dự Án Của Bạn</h3>
   <p align="center">
