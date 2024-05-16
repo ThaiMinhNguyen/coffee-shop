@@ -49,6 +49,7 @@
 <p>Ứng dụng quản lý quán cà phê Coffee Shop cung cấp các chức năng phù hợp cho cả người dùng (khách hàng) và quản trị viên (admin) như sau:</p>
 <pre>
 <b>Chức năng của Người Dùng (Khách hàng):</b>
+
 Xem Thực Đơn:
 Người dùng có thể xem thực đơn của quán cà phê với các món ăn, thức uống và giá cả tương ứng.
 
@@ -62,6 +63,7 @@ Quản Lý Tài Khoản:
 Người dùng có thể đăng nhập vào tài khoản của mình để theo dõi lịch sử đơn hàng, quản lý thông tin cá nhân.
 
 <b>Chức năng của Quản Trị Viên (Admin):</b>
+
 Quản Lý Thực Đơn:
 Quản trị viên có thể thêm, sửa đổi hoặc xóa các món ăn, thức uống trên thực đơn của quán cà phê.
 
@@ -72,15 +74,26 @@ Quản Lý Khách Hàng:
 Quản trị viên có thể quản lý thông tin thanh toán của khách hàng.
 
 Thống Kê và Báo Cáo:
-Quản trị viên có thể xem các báo cáo và thống kê về doanh số bán hàng, sản phẩm phổ biến, hoạt động của khách hàng, và các chỉ số quan trọng khác để đưa ra các quyết định kinh doanh hiệu quả.
+Quản trị viên có thể xem các báo cáo và thống kê về doanh số bán hàng, sản phẩm phổ biến, hoạt động của khách hàng, và các chỉ số quan trọng khác 
+để đưa ra các quyết định kinh doanh hiệu quả.
 </pre>
 <!-- DESIGN -->
+
 <h1>Sơ đồ use-case</h1>
 
+<img src="images/User_CoffeeShop.jpg" alt="Logo" width="80" height="80">
+<h3 align="center">User Use-case</h3>
+
+<img src="images/Admin_CoffeeShop.jpg" alt="Logo" width="80" height="80">
+<h3 align="center">Admin Use-case</h3>
+
+<h1>Sơ đồ cơ sở dữ liệu</h1>
+
+<img src="images/firestore1.drawio.png" alt="Logo" width="80" height="80">
+<h3 align="center">Sơ đồ database</h3>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-Thiết kế cơ sở dữ liệu
-Mô tả thiết kế cơ sở dữ liệu của hệ thống.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- INTERFACE -->
 Giao diện
 Mô tả giao diện người dùng của ứng dụng, bao gồm các hình ảnh hoặc screenshot của các màn hình chính.
