@@ -45,25 +45,38 @@
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
+<h1>Tổng quan về dự án</h1>
+<p>Ứng dụng quản lý quán cà phê Coffee Shop cung cấp các chức năng phù hợp cho cả người dùng (khách hàng) và quản trị viên (admin) như sau:</p>
 <pre>
-Tổng quan về dự án
-Đặt vấn đề
-Mô tả vấn đề mà dự án của bạn muốn giải quyết.
-Tại sao vấn đề này quan trọng?
+<b>Chức năng của Người Dùng (Khách hàng):</b>
+Xem Thực Đơn:
+Người dùng có thể xem thực đơn của quán cà phê với các món ăn, thức uống và giá cả tương ứng.
+
+Đặt Hàng:
+Người dùng có thể đặt hàng trực tuyến thông qua ứng dụng bằng cách chọn món ăn, thức uống và thêm vào giỏ hàng
+
+Thanh Toán:
+Người dùng có thể thanh toán cho đơn hàng của mình từ giỏ hàng
+
+Quản Lý Tài Khoản:
+Người dùng có thể đăng nhập vào tài khoản của mình để theo dõi lịch sử đơn hàng, quản lý thông tin cá nhân.
+
+<b>Chức năng của Quản Trị Viên (Admin):</b>
+Quản Lý Thực Đơn:
+Quản trị viên có thể thêm, sửa đổi hoặc xóa các món ăn, thức uống trên thực đơn của quán cà phê.
+
+Quản Lý Đơn Hàng:
+Quản trị viên có thể xem và quản lý tất cả các đơn hàng được đặt trực tuyến thông qua ứng dụng.
+
+Quản Lý Khách Hàng:
+Quản trị viên có thể quản lý thông tin thanh toán của khách hàng.
+
+Thống Kê và Báo Cáo:
+Quản trị viên có thể xem các báo cáo và thống kê về doanh số bán hàng, sản phẩm phổ biến, hoạt động của khách hàng, và các chỉ số quan trọng khác để đưa ra các quyết định kinh doanh hiệu quả.
 </pre>
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-Mục tiêu
-Những mục tiêu mà dự án của bạn hướng tới.
-Kết quả dự kiến đạt được.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-Ý nghĩa đề tài
-Ý nghĩa thực tiễn của đề tài.
-Ảnh hưởng của dự án đến cộng đồng hoặc lĩnh vực liên quan.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- DESIGN -->
-Thiết kế
-Sơ đồ use-case
-Sơ đồ use-case của hệ thống, mô tả các chức năng chính và tương tác của người dùng.
+<h1>Sơ đồ use-case</h1>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 Thiết kế cơ sở dữ liệu
 Mô tả thiết kế cơ sở dữ liệu của hệ thống.
