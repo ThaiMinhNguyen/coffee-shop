@@ -104,7 +104,7 @@ Quản trị viên có thể xem các báo cáo và thống kê về doanh số 
 
 <h1>Giao diện cơ bản</h1>
 
-<img src="images/welcome_page.png" alt="Logo" align="center" height="800">
+<center><img src="images/welcome_page.png" alt="Logo" height="800"></center>
 <h4 align="center">Trang welcome</h4>
 
 <img src="images/sign_in.png" alt="Logo">
