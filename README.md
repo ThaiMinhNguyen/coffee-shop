@@ -77,6 +77,9 @@ Thống Kê và Báo Cáo:
 Quản trị viên có thể xem các báo cáo và thống kê về doanh số bán hàng, sản phẩm phổ biến, hoạt động của khách hàng, và các chỉ số quan trọng khác 
 để đưa ra các quyết định kinh doanh hiệu quả.
 </pre>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- DESIGN -->
 
 <h1>Sơ đồ use-case</h1>
@@ -87,6 +90,8 @@ Quản trị viên có thể xem các báo cáo và thống kê về doanh số 
 <img src="images/Admin_CoffeeShop.jpg" alt="Logo">
 <h3 align="center">Admin Use-case</h3>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <h1>Sơ đồ cơ sở dữ liệu</h1>
 
 <img src="images/firestore1.drawio.png" alt="Logo">
@@ -95,6 +100,6 @@ Quản trị viên có thể xem các báo cáo và thống kê về doanh số 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- INTERFACE -->
-Giao diện
-Mô tả giao diện người dùng của ứng dụng, bao gồm các hình ảnh hoặc screenshot của các màn hình chính.
+<h1>Giao diện</h1>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
