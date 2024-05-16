@@ -69,10 +69,12 @@
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
+<p>
 Phần I. Tổng quan về dự án
 1. Đặt vấn đề
 Mô tả vấn đề mà dự án của bạn muốn giải quyết.
 Tại sao vấn đề này quan trọng?
+</p>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 2. Mục tiêu
 Những mục tiêu mà dự án của bạn hướng tới.
