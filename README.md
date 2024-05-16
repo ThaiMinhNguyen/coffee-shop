@@ -3,22 +3,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/your_username/repo_name">
+  <a href="https://github.com/ThaiMinhNguyen/coffee-shop">
     <img src="images/coffee-icon1.png" alt="Logo" width="80" height="80">
   </a>
-  <h3 align="center">Tên Dự Án Của Bạn</h3>
-  <p align="center">
-    Một mô tả ngắn về dự án của bạn!
-    <br />
-    <a href="https://github.com/your_username/repo_name"><strong>Khám phá tài liệu »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/your_username/repo_name">Xem Demo</a>
-    ·
-    <a href="https://github.com/your_username/repo_name/issues">Báo cáo lỗi</a>
-    ·
-    <a href="https://github.com/your_username/repo_name/issues">Yêu cầu tính năng</a>
-  </p>
+  <h3 align="center">Coffee Shop</h3>
+  
 </div>
 <!-- TABLE OF CONTENTS -->
 <details>
