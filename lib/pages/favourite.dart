@@ -25,6 +25,7 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
+  bool isLoading = true;
   bool isRebuilt = true;
   int _currentTabIndex = 1;
   List<Coffee> favLs = [];
@@ -33,6 +34,12 @@ class _FavouriteState extends State<Favourite> {
 
   Future<void> loadItem() async {
     // if (!mounted) return;
+    if(mounted){
+      // print('Goi ham onSetState');
+      setState(() {
+        isLoading = true;
+      });
+    }
     List<Coffee> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getFavoriteItems(_auth.getFireBaseUser()!.uid);
     if(mounted){
       setState(() {
@@ -42,12 +49,14 @@ class _FavouriteState extends State<Favourite> {
         }
       });
     }
+    if(mounted){
+      // print('Goi ham onSetState');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
 
   void updateParentState() async {
     print('goi ham parent');
@@ -84,7 +93,16 @@ class _FavouriteState extends State<Favourite> {
           ),
         ),
       ),
-      body: emptyOrNot(),
+      body: Visibility(
+        visible: isLoading,
+        replacement:emptyOrNot(),
+        child: Container(
+          child: SpinKitFadingCircle(
+            color: Colors.brown.shade800,
+            size: 100,
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTap,
         currentIndex: _currentTabIndex,

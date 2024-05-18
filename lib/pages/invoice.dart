@@ -17,6 +17,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:remove_diacritic/remove_diacritic.dart';
 import 'package:coffee_shop/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../entity/item.dart';
 
@@ -28,6 +29,7 @@ class Invoice extends StatefulWidget {
 }
 
 class _InvoiceState extends State<Invoice> {
+  bool isLoading = true;
   int _currentTabIndex = 1;
   List<Bill> billLs = [];
   AuthService _auth = AuthService();
@@ -35,22 +37,34 @@ class _InvoiceState extends State<Invoice> {
 
 
   void onSetState(){
+    // if(mounted){
+    //   // print('Goi ham onSetState');
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // }
     getAllBill();
     if(mounted){
       print('Goi ham onSetState');
       setState(() {
-
+        // isLoading = true;
       });
     }
   }
 
   @override
   void initState() {
-    getAllBill();
     super.initState();
+    getAllBill();
   }
 
   Future<void> getAllBill() async {
+    if(mounted){
+      // print('Goi ham onSetState');
+      setState(() {
+        isLoading = true;
+      });
+    }
     List<Bill> bills = await DatabaseService(uid: _auth.getFireBaseUser()!.uid).getUserBill(_auth.getFireBaseUser()!.uid);
     if(mounted){
       setState(() {
@@ -58,6 +72,12 @@ class _InvoiceState extends State<Invoice> {
         if(billLs.isNotEmpty){
           isEmpty = false;
         }
+      });
+    }
+    if(mounted){
+      print('Goi ham onSetState');
+      setState(() {
+        isLoading = false;
       });
     }
   }
@@ -79,7 +99,17 @@ class _InvoiceState extends State<Invoice> {
           ),
         ),
       ),
-      body: emptyOrNot(),
+      body: Visibility(
+        visible: isLoading,
+        replacement:emptyOrNot(),
+        child: Container(
+          child: SpinKitFadingCircle(
+            color: Colors.brown.shade800,
+            size: 100,
+          ),
+        ),
+      ),
+      // emptyOrNot(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTap,
         currentIndex: _currentTabIndex,

@@ -25,6 +25,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  bool isLoading = true;
   double totalPrice = 0;
   int _currentTabIndex = 2;
   List<Item> itemLs = [];
@@ -32,6 +33,12 @@ class _CartState extends State<Cart> {
   bool isEmpty = true;
 
   Future<void> loadItem() async {
+    if(mounted){
+      // print('Goi ham onSetState');
+      setState(() {
+        isLoading = true;
+      });
+    }
     List<Item> ls = await DatabaseService(uid: _auth.getFireBaseUser()!.uid)
         .getUserCart(_auth.getFireBaseUser()!.uid);
     if (mounted) {
@@ -40,6 +47,12 @@ class _CartState extends State<Cart> {
         if (itemLs.isNotEmpty) {
           isEmpty = false;
         }
+      });
+    }
+    if(mounted){
+      // print('Goi ham onSetState');
+      setState(() {
+        isLoading = false;
       });
     }
   }
@@ -66,19 +79,28 @@ class _CartState extends State<Cart> {
   }
 
   void onSetState() {
+    // if(mounted){
+    //   // print('Goi ham onSetState');
+    //   setState(() {
+    //     isLoading = true;
+    //   });
+    // }
     loadItem();
     if (mounted) {
       print('Goi ham onSetState');
-      setState(() {});
+      setState(() {
+        // isLoading = false;
+      });
     }
   }
 
   @override
   void initState() {
     // addItem();
+
+    super.initState();
     loadItem();
     getTotalPrice();
-    super.initState();
   }
 
   @override
@@ -98,7 +120,16 @@ class _CartState extends State<Cart> {
           ),
         ),
       ),
-      body: emptyOrNot(),
+      body: Visibility(
+        visible: isLoading,
+        replacement:emptyOrNot(),
+        child: Container(
+          child: SpinKitFadingCircle(
+            color: Colors.brown.shade800,
+            size: 100,
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTap,
         currentIndex: _currentTabIndex,
