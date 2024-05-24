@@ -180,53 +180,55 @@ class _StartPageState extends State<StartPage> {
 
   getHome() {
     if (searchController.text.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Popular Product',
-            style: TextStyle(
-              fontFamily: 'MadimiOne',
-              fontSize: 25,
+      return SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Container(
-            height: 200,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _data.length,
-              itemBuilder: (context, index) {
-                return CoffeeCard(
-                    coffee: _data[index]);
-              },
+            Text(
+              'Popular Product',
+              style: TextStyle(
+                fontFamily: 'MadimiOne',
+                fontSize: 25,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Special for you',
-            style: TextStyle(
-              fontFamily: 'MadimiOne',
-              fontSize: 25,
+            Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _data.length,
+                itemBuilder: (context, index) {
+                  return CoffeeCard(
+                      coffee: _data[index]);
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          CarouselSlider(
-            items: ls,
-            options: CarouselOptions(
-              autoPlay: true,
-              viewportFraction: 1,
-              height: 160,
+            SizedBox(
+              height: 10,
             ),
-          ),
-        ],
+            Text(
+              'Special for you',
+              style: TextStyle(
+                fontFamily: 'MadimiOne',
+                fontSize: 25,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CarouselSlider(
+              items: ls,
+              options: CarouselOptions(
+                autoPlay: true,
+                viewportFraction: 1,
+                height: 160,
+              ),
+            ),
+          ],
+        ),
       );
     } else {
       return isLoading

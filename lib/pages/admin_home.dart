@@ -11,7 +11,6 @@ import 'package:coffee_shop/style/coffee_card.dart';
 import 'package:coffee_shop/style/detailed_coffee.dart';
 import 'package:coffee_shop/style/horizontal_card.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:remove_diacritic/remove_diacritic.dart';
@@ -475,6 +474,7 @@ class _AdminHomeState extends State<AdminHome> {
                     onPressed: () async {
                       await DatabaseService(uid: _auth.getFireBaseUser()!.uid).updateMenuItem(Coffee(name: name, img: url, price: price, description: description));
                       Navigator.of(context).pop();
+                      loadProducts();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,

@@ -61,6 +61,7 @@ class AuthService {
       final userCredential = await FirebaseAuth.instance.signInWithCredential(
         credential,
       );
+      await DatabaseService(uid: userCredential.user!.uid).updateUserDataGoogle(userCredential.user!.displayName!);
       return userCredential.user;
     } catch (e) {
       print("Error log in using google: $e");

@@ -21,6 +21,13 @@ class DatabaseService {
     });
   }
 
+  Future updateUserDataGoogle(String name) async {
+    return await userCollection.doc(uid).update({
+      'name': name,
+      'role': 'user',
+    });
+  }
+
   Future updateUserAgeData(int age) async {
     return await userCollection.doc(uid).update({
       'age': age,
